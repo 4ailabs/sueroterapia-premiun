@@ -6,6 +6,8 @@ import {
     ChevronRight, ChevronLeft, RefreshCw, Whatsapp, MapPin, Sparkles, ArrowRight, BookOpen, 
     Target, FlaskConical, CheckCircle, Beaker, CalendarClock, Bot, ExclamationTriangle 
 } from './icons';
+import Confetti from 'react-confetti';
+import { useWindowSize } from 'react-use';
 
 
 // --- SUB-COMPONENTS (Modern Redesign) ---
@@ -254,6 +256,13 @@ const ProtocoloSugeridoCard: React.FC<{ protocolo: Protocolo }> = ({ protocolo }
 const PantallaResultados: React.FC<{ resultados: ResultadoSuero[]; onRestart: () => void; respuestas: Respuestas }> = ({ resultados, onRestart, respuestas }) => {
     const sueroPrincipal = resultados[0];
     const suerosAlternativos = resultados.slice(1, 3);
+    const { width, height } = useWindowSize();
+    const [showConfetti, setShowConfetti] = React.useState(true);
+    React.useEffect(() => {
+      setShowConfetti(true);
+      const timer = setTimeout(() => setShowConfetti(false), 2200);
+      return () => clearTimeout(timer);
+    }, []);
     
     const calcularProtocolo = (suero: ResultadoSuero, respuestas: Respuestas): Protocolo => {
         let puntuacionSeveridad = 0;
@@ -272,7 +281,19 @@ const PantallaResultados: React.FC<{ resultados: ResultadoSuero[]; onRestart: ()
     const protocolo = calcularProtocolo(sueroPrincipal, respuestas);
 
     return (
-        <div className="max-w-full md:max-w-4xl w-full animate-fade-in px-2 sm:px-0">
+        <div className="max-w-full md:max-w-4xl w-full animate-fade-in px-2 sm:px-0 relative">
+            {showConfetti && (
+              <Confetti
+                width={width}
+                height={height}
+                numberOfPieces={120}
+                recycle={false}
+                gravity={0.25}
+                colors={["#38bdf8","#34d399","#f472b6","#fbbf24","#fff"]}
+                initialVelocityY={8}
+                opacity={0.7}
+              />
+            )}
              <div className="text-center mb-8">
                 <Bot className="mx-auto w-12 h-12 text-blue-500 mb-2" />
                 <h1 className="text-center text-4xl sm:text-5xl font-bold text-white drop-shadow-lg">Tus Resultados Personalizados</h1>
