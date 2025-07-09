@@ -496,13 +496,13 @@ export default function SueroSelector() {
                             Por favor responde todas las preguntas antes de continuar.
                           </div>
                         )}
-                        <div className="flex justify-between items-center mt-10 pt-6 border-t border-slate-200">
-                            <button onClick={seccionAnterior} disabled={seccionActual === 0} className="flex items-center gap-2 px-6 py-3 bg-slate-100 text-slate-700 font-bold rounded-full hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                        <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-2 mt-10 pt-6 border-t border-slate-200">
+                            <button onClick={seccionAnterior} disabled={seccionActual === 0} className="w-full sm:w-auto mb-2 sm:mb-0 flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 font-bold rounded-full hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                                 <ChevronLeft className="w-5 h-5" />
                                 Anterior
                             </button>
-                            <span className="text-sm font-bold text-slate-500">Paso {seccionActual + 1} de {SECCIONES.length}</span>
-                            <button onClick={siguienteSeccion} disabled={!seccionCompleta} className="group flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors shadow-lg shadow-blue-500/30">
+                            <span className="text-sm font-bold text-slate-500 text-center w-full sm:w-auto mb-2 sm:mb-0">Paso {seccionActual + 1} de {SECCIONES.length}</span>
+                            <button onClick={siguienteSeccion} disabled={!seccionCompleta} className="w-full sm:w-auto flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors shadow-lg shadow-blue-500/30">
                                 {seccionActual === SECCIONES.length - 1 ? 'Ver Resultados' : 'Siguiente'}
                                 <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                             </button>
