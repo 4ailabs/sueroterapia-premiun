@@ -49,7 +49,6 @@ export const SUEROS: Record<string, Suero> = {
       { nombre: 'Ácido Ascórbico', dosis: '10 ml (Vit C)', funcion: 'Reduce el daño oxidativo elevado en la resistencia a la insulina.' },
       { nombre: 'Selenio', dosis: '6ml', funcion: 'Mayor apoyo antioxidante.' },
       { nombre: 'Cromo', dosis: '2 ml', funcion: 'Potencia la acción de la insulina en los receptores celulares.' },
-      { nombre: 'DSMO', dosis: '5 ml', funcion: 'Potente antioxidante y antiinflamatorio.' },
       { nombre: 'Complejo B', dosis: '10 ml', funcion: 'Cofactores esenciales para todas las reacciones metabólicas de energía.' },
       { nombre: 'Carnitina', dosis: '5ml', funcion: 'Crucial para transportar las grasas a la mitocondria para ser quemadas como energía.' }
     ],
