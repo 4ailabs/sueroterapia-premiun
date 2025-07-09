@@ -476,7 +476,7 @@ export default function SueroSelector() {
                 return <PantallaInfoSueros onBack={() => setPantallaActual('inicio')} />;
             case 'cuestionario':
                 return (
-                    <div className="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl w-full max-w-4xl">
+                    <div className="bg-white p-4 sm:p-10 rounded-3xl shadow-2xl w-full max-w-lg md:max-w-3xl lg:max-w-4xl mx-auto">
                         <ProgressBar value={progreso} />
                         <div className="mt-6">
                             <Cuestionario
