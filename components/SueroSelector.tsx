@@ -20,7 +20,7 @@ const ProgressBar: React.FC<{ value: number }> = ({ value }) => (
 );
 
 const PantallaInicio: React.FC<{ onStart: () => void, onShowInfo: () => void }> = ({ onStart, onShowInfo }) => (
-  <div className="text-center p-8 max-w-2xl mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl animate-fade-in border border-white/20">
+  <div className="text-center p-4 sm:p-8 max-w-2xl w-full mx-auto bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl animate-fade-in border border-white/20">
     <div className="relative">
       <Sparkles className="mx-auto w-16 h-16 text-blue-500 mb-6 animate-pulse" />
       <div className="absolute inset-0 w-16 h-16 mx-auto bg-gradient-to-r from-blue-400 to-teal-400 rounded-full blur-xl opacity-30"></div>
@@ -47,7 +47,7 @@ const PantallaInicio: React.FC<{ onStart: () => void, onShowInfo: () => void }> 
 );
 
 const SueroInfoCard: React.FC<{ suero: Suero }> = ({ suero }) => (
-    <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-6 border-t-8 flex flex-col h-full hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-white/20" style={{ borderColor: suero.color }}>
+    <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-4 sm:p-6 border-t-8 flex flex-col h-full hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-white/20 w-full max-w-full" style={{ borderColor: suero.color }}>
         <h3 className="text-2xl font-bold mb-3" style={{ color: suero.color }}>{suero.nombre}</h3>
         <p className="text-slate-600 mb-6 flex-grow">{suero.descripcion}</p>
         <div className="mb-6">
@@ -73,7 +73,7 @@ const SueroInfoCard: React.FC<{ suero: Suero }> = ({ suero }) => (
 const PantallaInfoSueros: React.FC<{ onBack: () => void }> = ({ onBack }) => (
     <div className="max-w-6xl w-full p-4 animate-fade-in">
         <h1 className="text-center text-4xl sm:text-5xl font-bold mb-10 text-white drop-shadow-lg">Nuestra Gama de Sueros</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 w-full max-w-full">
             {Object.values(SUEROS).map(suero => (
                 <SueroInfoCard key={suero.nombre} suero={suero} />
             ))}
@@ -95,7 +95,7 @@ const PreguntaControl: React.FC<{ pregunta: Pregunta; respuesta: string | undefi
 
   if (pregunta.tipo === 'radio') {
     return (
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         {pregunta.opciones.map((opcion) => {
           const opt = opcion as OpcionPregunta;
           const seleccionado = respuesta === opt.valor;
@@ -192,7 +192,7 @@ const ScoreCircle: React.FC<{ score: number; color: string; }> = ({ score, color
 };
 
 const ResultadoPrincipalCard: React.FC<{ suero: ResultadoSuero; }> = ({ suero }) => (
-    <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-8 mb-8 border-t-8 border border-white/20" style={{ borderColor: suero.color }}>
+    <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl p-4 sm:p-8 mb-8 border-t-8 border border-white/20 w-full max-w-full" style={{ borderColor: suero.color }}>
         <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1">
                 <h2 className="text-sm font-bold uppercase tracking-wider mb-1" style={{ color: suero.color }}>Tu suero recomendado</h2>
@@ -222,7 +222,7 @@ const ResultadoPrincipalCard: React.FC<{ suero: ResultadoSuero; }> = ({ suero })
 );
 
 const ResultadoAlternativoCard: React.FC<{ suero: ResultadoSuero }> = ({ suero }) => (
-    <div className="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-lg flex-1 min-w-[280px] flex flex-col border-t-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-white/20" style={{ borderColor: suero.color }}>
+    <div className="bg-white/95 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-lg flex-1 min-w-0 flex flex-col border-t-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-white/20 w-full max-w-full" style={{ borderColor: suero.color }}>
         <div className="flex justify-between items-start mb-3">
             <h3 className="font-bold text-xl text-slate-900" >{suero.nombre}</h3>
             <div className="font-bold text-lg" style={{color: suero.color}}>{Math.round(suero.puntuacion)}%</div>
@@ -236,7 +236,7 @@ const ResultadoAlternativoCard: React.FC<{ suero: ResultadoSuero }> = ({ suero }
 );
 
 const ProtocoloSugeridoCard: React.FC<{ protocolo: Protocolo }> = ({ protocolo }) => (
-    <div className="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-lg border-l-4 border-blue-400 border border-white/20">
+    <div className="bg-white/95 backdrop-blur-sm p-4 sm:p-6 rounded-2xl shadow-lg border-l-4 border-blue-400 border border-white/20 w-full max-w-full">
         <div className="flex items-start sm:items-center gap-5">
             <CalendarClock className="h-10 w-10 text-blue-500 flex-shrink-0" />
             <div>
@@ -272,7 +272,7 @@ const PantallaResultados: React.FC<{ resultados: ResultadoSuero[]; onRestart: ()
     const protocolo = calcularProtocolo(sueroPrincipal, respuestas);
 
     return (
-        <div className="max-w-4xl w-full animate-fade-in">
+        <div className="max-w-full md:max-w-4xl w-full animate-fade-in px-2 sm:px-0">
              <div className="text-center mb-8">
                 <Bot className="mx-auto w-12 h-12 text-blue-500 mb-2" />
                 <h1 className="text-center text-4xl sm:text-5xl font-bold text-white drop-shadow-lg">Tus Resultados Personalizados</h1>
