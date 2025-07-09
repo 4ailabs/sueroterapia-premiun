@@ -351,9 +351,9 @@ export default function SueroSelector() {
             oxidacion: { alto: "Tu estilo de vida te expone a un alto estrés oxidativo.", medio: "Una carga antioxidante extra te sería útil." },
         };
         
-        if (respuestas.objetivo === 'energia' && sueroNombre.includes('INMUNO-BOOST')) razones.unshift("Seleccionaste la energía como tu prioridad, y este suero es excelente para ello.");
-        if (respuestas.objetivo === 'estres' && sueroNombre.includes('RELAX TOTAL')) razones.unshift("Buscas reducir el estrés, y este suero está diseñado específicamente para la relajación.");
-        if (respuestas.objetivo === 'metabolismo' && sueroNombre.includes('RESISTENCIA A LA INSULINA')) razones.unshift("Tu objetivo es la salud metabólica, y este es el suero más especializado.");
+        if (respuestas.objetivo === 'energia' && sueroNombre.includes('Immunity Prime')) razones.unshift("Seleccionaste la energía como tu prioridad, y este suero es excelente para ello.");
+        if (respuestas.objetivo === 'estres' && sueroNombre.includes('Serenity Balance')) razones.unshift("Buscas reducir el estrés, y este suero está diseñado específicamente para la relajación.");
+        if (respuestas.objetivo === 'metabolismo' && sueroNombre.includes('Sugar Sync')) razones.unshift("Tu objetivo es la salud metabólica, y este es el suero más especializado.");
 
         Object.entries(dimensiones).forEach(([key, value]) => {
              if(mapaRazones[key]){
@@ -411,10 +411,10 @@ export default function SueroSelector() {
         const compatibilidad: ResultadoSuero[] = Object.values(SUEROS).map(suero => {
             let puntuacionTotal = 0;
             const mapaDimensiones: Record<string, Record<string, number>> = {
-                'INMUNO-BOOST': { inmunidad: 35, energia: 30, estres: 20, prevencion: 15 },
-                'RELAX TOTAL': { estres: 35, sueño: 30, ansiedad: 25, energia: 10 },
-                'ANTIOXIDANTE PROFILÁCTICO': { oxidacion: 30, prevencion: 30, energia: 20, inmunidad: 20 },
-                'ANTIOXIDANTE + RESISTENCIA A LA INSULINA': { metabolismo: 40, oxidacion: 25, energia: 20, prevencion: 15 }
+                'Immunity Prime': { inmunidad: 35, energia: 30, estres: 20, prevencion: 15 },
+                'Serenity Balance': { estres: 35, sueño: 30, ansiedad: 25, energia: 10 },
+                'Radiance Defense': { oxidacion: 30, prevencion: 30, energia: 20, inmunidad: 20 },
+                'Sugar Sync': { metabolismo: 40, oxidacion: 25, energia: 20, prevencion: 15 }
             };
 
             const pesosDimension = mapaDimensiones[suero.nombre];
