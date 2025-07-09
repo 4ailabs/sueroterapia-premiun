@@ -1,0 +1,5 @@
+{
+  "name": "VitaScan Suero Recommender",
+  "description": "An intelligent questionnaire to help users find the most suitable IV serum for their health and wellness goals. Based on user responses, it provides personalized recommendations and suggested treatment protocols.",
+  "requestFramePermissions": []
+}
