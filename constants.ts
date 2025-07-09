@@ -5,7 +5,7 @@ import { Activity, Zap, Brain, Shield, Target, Sparkles } from './components/ico
 
 export const SUEROS: Record<string, Suero> = {
   'INMUNO-BOOST': {
-    nombre: 'Immunity Prime / Inmuno-Boost',
+    nombre: 'Immunity Prime',
     descripcion: 'Sirve para subir las defensas, combatir la fatiga y aumentar la resistencia al estrés.',
     componentes: [
       { nombre: 'Ácido ascórbico', dosis: '5g', funcion: 'Mejora función de glóbulos blancos y actúa como antioxidante.' },
@@ -17,7 +17,7 @@ export const SUEROS: Record<string, Suero> = {
     color: '#10B981' // emerald-500
   },
   'RELAX TOTAL': {
-    nombre: 'Serenity Balance / Relax Total',
+    nombre: 'Serenity Balance',
     descripcion: 'Diseñado para disminuir la hiperexcitabilidad del sistema nervioso central y periférico y para mitigar el daño metabólico del estrés.',
     componentes: [
       { nombre: 'Magnesio', dosis: '2g', funcion: 'Bloquea receptores excitatorios (NMDA) en el cerebro y relaja los músculos.' },
@@ -29,7 +29,7 @@ export const SUEROS: Record<string, Suero> = {
     color: '#8B5CF6' // violet-500
   },
   'ANTIOXIDANTE PROFILÁCTICO': {
-    nombre: 'Radiance Defense / Antiox Prof',
+    nombre: 'Radiance Defense',
     descripcion: 'Suero de "mantenimiento" o "bienestar general". Su objetivo es preventivo (profiláctico) y busca recargar al cuerpo de antioxidantes clave.',
     componentes: [
       { nombre: 'Ascorbato de Sodio', dosis: '10 ml (Vit C)', funcion: 'Antioxidante principal, apoya sistema inmune y producción de colágeno.' },
@@ -43,7 +43,7 @@ export const SUEROS: Record<string, Suero> = {
     color: '#3B82F6' // blue-500
   },
   'ANTIOXIDANTE + RESISTENCIA A LA INSULINA': {
-    nombre: 'Sugar Sync / Resistencia insulina',
+    nombre: 'Sugar Sync',
     descripcion: 'Diseñado para pacientes con problemas metabólicos, como resistencia a la insulina, pre-diabetes o como apoyo en el control de la diabetes tipo 2.',
     componentes: [
       { nombre: 'Ácido Ascórbico', dosis: '10 ml (Vit C)', funcion: 'Reduce el daño oxidativo elevado en la resistencia a la insulina.' },
@@ -57,7 +57,7 @@ export const SUEROS: Record<string, Suero> = {
     color: '#F59E0B' // amber-500
   },
   'THE GLOW DRIP': {
-    nombre: 'The Glow Drip / Ácido ascórbico',
+    nombre: 'The Glow Drip',
     descripcion: 'Suero de vitamina C de alta potencia para potenciar el brillo de la piel y la salud celular.',
     componentes: [
       { nombre: 'Ácido ascórbico', dosis: '7g', funcion: 'Antioxidante, mejora la producción de colágeno y la luminosidad de la piel.' }
@@ -67,7 +67,7 @@ export const SUEROS: Record<string, Suero> = {
     color: '#F472B6' // pink-400
   },
   'THE CALM DRIP': {
-    nombre: 'The Calm Drip / Sulfato de Magnesio',
+    nombre: 'The Calm Drip',
     descripcion: 'Suero relajante para el sistema nervioso y muscular, ideal para estrés y contracturas.',
     componentes: [
       { nombre: 'Sulfato de Magnesio', dosis: '2g', funcion: 'Relaja músculos y sistema nervioso.' }
@@ -77,7 +77,7 @@ export const SUEROS: Record<string, Suero> = {
     color: '#60A5FA' // blue-400
   },
   'THE RENEW DRIP': {
-    nombre: 'The Renew Drip / Ácido lipoico',
+    nombre: 'The Renew Drip',
     descripcion: 'Suero antioxidante y detoxificante, ideal para renovación celular y protección metabólica.',
     componentes: [
       { nombre: 'Ácido lipoico', dosis: '600mg', funcion: 'Antioxidante y detoxificante celular.' }
