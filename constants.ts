@@ -66,16 +66,6 @@ export const SUEROS: Record<string, Suero> = {
     indicaciones: ['Brillo de piel', 'Antioxidante', 'Bienestar general'],
     color: '#F472B6' // pink-400
   },
-  'THE CALM DRIP': {
-    nombre: 'The Calm Drip',
-    descripcion: 'Suero relajante para el sistema nervioso y muscular, ideal para estrés y contracturas.',
-    componentes: [
-      { nombre: 'Sulfato de Magnesio', dosis: '2g', funcion: 'Relaja músculos y sistema nervioso.' }
-    ],
-    dimensiones: ['estres', 'sueño'],
-    indicaciones: ['Estrés', 'Tensión muscular', 'Insomnio'],
-    color: '#60A5FA' // blue-400
-  },
   'THE RENEW DRIP': {
     nombre: 'The Renew Drip',
     descripcion: 'Suero antioxidante y detoxificante, ideal para renovación celular y protección metabólica.',
