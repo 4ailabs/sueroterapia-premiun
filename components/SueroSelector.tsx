@@ -29,7 +29,7 @@ const PantallaInicio: React.FC<{ onStart: () => void, onShowInfo: () => void }> 
     </div>
     <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent mb-4">VitaScan</h1>
     <p className="text-slate-600 mb-10 text-lg max-w-lg mx-auto">
-      Encuentra tu suero ideal. Responde nuestro cuestionario inteligente para recibir una recomendación de sueroterapia IV 100% personalizada.
+      Vamos a elegir el mejor suero para ti. Responde nuestro cuestionario inteligente para recibir una recomendación de sueroterapia IV 100% personalizada.
     </p>
     <div className="flex flex-col sm:flex-row gap-4 justify-center">
       <button
@@ -253,11 +253,61 @@ const ProtocoloSugeridoCard: React.FC<{ protocolo: Protocolo }> = ({ protocolo }
     </div>
 );
 
-const PantallaResultados: React.FC<{ resultados: ResultadoSuero[]; onRestart: () => void; respuestas: Respuestas }> = ({ resultados, onRestart, respuestas }) => {
+const PantallaResultados: React.FC<{ resultados: ResultadoSuero[]; onRestart: () => void; respuestas: Respuestas; dimensiones?: DimensionesPuntuadas }> = ({ resultados, onRestart, respuestas, dimensiones }) => {
     const sueroPrincipal = resultados[0];
     const suerosAlternativos = resultados.slice(1, 3);
     const { width, height } = useWindowSize();
     const [showConfetti, setShowConfetti] = React.useState(true);
+    
+    // Determinar la necesidad principal para mostrar en los resultados
+    const determinarNecesidadPrincipal = (dimensiones: DimensionesPuntuadas): string => {
+        const prioridades = [
+            { dimension: 'metabolismo', objetivo: 'metabolismo', umbral: 60 },
+            { dimension: 'inmunidad', objetivo: 'inmunidad', umbral: 65 },
+            { dimension: 'estres', objetivo: 'estres', umbral: 70 },
+            { dimension: 'energia', objetivo: 'energia', umbral: 75 },
+            { dimension: 'oxidacion', objetivo: 'antienvejecimiento', umbral: 60 }
+        ];
+
+        for (const prioridad of prioridades) {
+            const puntuacion = dimensiones[prioridad.dimension]?.puntuacionNormalizada || 0;
+            if (puntuacion >= prioridad.umbral) {
+                return prioridad.objetivo;
+            }
+        }
+
+        let maxPuntuacion = 0;
+        let objetivoDefault = 'energia';
+        
+        Object.entries(dimensiones).forEach(([dimension, data]) => {
+            if (data.puntuacionNormalizada > maxPuntuacion) {
+                maxPuntuacion = data.puntuacionNormalizada;
+                const mapeo: Record<string, string> = {
+                    'metabolismo': 'metabolismo',
+                    'inmunidad': 'inmunidad', 
+                    'estres': 'estres',
+                    'energia': 'energia',
+                    'oxidacion': 'antienvejecimiento',
+                    'prevencion': 'antienvejecimiento'
+                };
+                objetivoDefault = mapeo[dimension] || 'energia';
+            }
+        });
+
+        return objetivoDefault;
+    };
+
+    const obtenerTextoNecesidad = (necesidad: string): string => {
+        const textos: Record<string, string> = {
+            'energia': 'Aumentar energía y combatir fatiga',
+            'estres': 'Reducir estrés y mejorar sueño',
+            'inmunidad': 'Fortalecer sistema inmune',
+            'metabolismo': 'Mejorar control de azúcar y metabolismo',
+            'antienvejecimiento': 'Anti-envejecimiento y bienestar general'
+        };
+        return textos[necesidad] || 'Mejorar tu bienestar general';
+    };
+
     React.useEffect(() => {
       setShowConfetti(true);
       const timer = setTimeout(() => setShowConfetti(false), 2200);
@@ -297,6 +347,12 @@ const PantallaResultados: React.FC<{ resultados: ResultadoSuero[]; onRestart: ()
              <div className="text-center mb-8">
                 <Bot className="mx-auto w-12 h-12 text-blue-500 mb-2" />
                 <h1 className="text-center text-4xl sm:text-5xl font-bold text-white drop-shadow-lg">Tus Resultados Personalizados</h1>
+                <div className="mt-6 p-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 max-w-2xl mx-auto">
+                    <h2 className="text-2xl font-bold text-slate-900 mb-2">Después de analizar todo:</h2>
+                    <p className="text-lg text-slate-700 font-semibold">
+                        Tu necesidad principal es: <span className="text-blue-600 font-bold">{obtenerTextoNecesidad(determinarNecesidadPrincipal(dimensiones || {}))}</span>
+                    </p>
+                </div>
             </div>
             <ResultadoPrincipalCard suero={sueroPrincipal} />
             <div className="mt-8">
@@ -358,6 +414,47 @@ export default function SueroSelector() {
         setRespuestas(prev => ({ ...prev, [id]: valor }));
     }, []);
 
+    const determinarNecesidadPrincipal = useCallback((dimensiones: DimensionesPuntuadas): string => {
+        // Prioridades de salud (de más crítica a menos crítica)
+        const prioridades = [
+            { dimension: 'metabolismo', objetivo: 'metabolismo', umbral: 60 },
+            { dimension: 'inmunidad', objetivo: 'inmunidad', umbral: 65 },
+            { dimension: 'estres', objetivo: 'estres', umbral: 70 },
+            { dimension: 'energia', objetivo: 'energia', umbral: 75 },
+            { dimension: 'oxidacion', objetivo: 'antienvejecimiento', umbral: 60 }
+        ];
+
+        // Buscar la primera dimensión que supere su umbral
+        for (const prioridad of prioridades) {
+            const puntuacion = dimensiones[prioridad.dimension]?.puntuacionNormalizada || 0;
+            if (puntuacion >= prioridad.umbral) {
+                return prioridad.objetivo;
+            }
+        }
+
+        // Si ninguna supera el umbral, tomar la de mayor puntuación
+        let maxPuntuacion = 0;
+        let objetivoDefault = 'energia';
+        
+        Object.entries(dimensiones).forEach(([dimension, data]) => {
+            if (data.puntuacionNormalizada > maxPuntuacion) {
+                maxPuntuacion = data.puntuacionNormalizada;
+                // Mapear dimensión a objetivo
+                const mapeo: Record<string, string> = {
+                    'metabolismo': 'metabolismo',
+                    'inmunidad': 'inmunidad', 
+                    'estres': 'estres',
+                    'energia': 'energia',
+                    'oxidacion': 'antienvejecimiento',
+                    'prevencion': 'antienvejecimiento'
+                };
+                objetivoDefault = mapeo[dimension] || 'energia';
+            }
+        });
+
+        return objetivoDefault;
+    }, []);
+
     const generarRazones = useCallback((sueroNombre: string, dimensiones: DimensionesPuntuadas): string[] => {
         const razones: string[] = [];
         const umbralAlto = 70;
@@ -372,9 +469,15 @@ export default function SueroSelector() {
             oxidacion: { alto: "Tu estilo de vida te expone a un alto estrés oxidativo.", medio: "Una carga antioxidante extra te sería útil." },
         };
         
-        if (respuestas.objetivo === 'energia' && sueroNombre.includes('Immunity Prime')) razones.unshift("Seleccionaste la energía como tu prioridad, y este suero es excelente para ello.");
-        if (respuestas.objetivo === 'estres' && sueroNombre.includes('Serenity Balance')) razones.unshift("Buscas reducir el estrés, y este suero está diseñado específicamente para la relajación.");
-        if (respuestas.objetivo === 'metabolismo' && sueroNombre.includes('Sugar Sync')) razones.unshift("Tu objetivo es la salud metabólica, y este es el suero más especializado.");
+        // Determinar automáticamente la necesidad principal
+        const necesidadPrincipal = determinarNecesidadPrincipal(dimensiones);
+        
+        // Priorizar razones basadas en la necesidad principal determinada automáticamente
+        if (necesidadPrincipal === 'energia' && sueroNombre.includes('Immunity Prime')) razones.unshift("Después de analizar todo, tu necesidad principal es la energía, y este suero es perfecto para combatir la fatiga.");
+        if (necesidadPrincipal === 'estres' && sueroNombre.includes('Serenity Balance')) razones.unshift("Después de analizar todo, tu necesidad principal es reducir el estrés, y este suero está diseñado específicamente para la relajación.");
+        if (necesidadPrincipal === 'metabolismo' && sueroNombre.includes('Sugar Sync')) razones.unshift("Después de analizar todo, tu necesidad principal es mejorar tu metabolismo, y este es el suero más especializado.");
+        if (necesidadPrincipal === 'inmunidad' && sueroNombre.includes('Immunity Prime')) razones.unshift("Después de analizar todo, tu necesidad principal es fortalecer tu sistema inmune, y este suero es ideal para ello.");
+        if (necesidadPrincipal === 'antienvejecimiento' && sueroNombre.includes('Radiance Defense')) razones.unshift("Después de analizar todo, tu necesidad principal es el anti-envejecimiento, y este suero antioxidante es perfecto.");
 
         Object.entries(dimensiones).forEach(([key, value]) => {
              if(mapaRazones[key]){
@@ -384,9 +487,9 @@ export default function SueroSelector() {
         });
 
         return [...new Set(razones)]; // Remove duplicates
-    }, [respuestas.objetivo]);
+    }, [determinarNecesidadPrincipal]);
 
-    const calcularResultados = useCallback(() => {
+    const calcularDimensiones = useCallback((): DimensionesPuntuadas => {
         const dims: DimensionesPuntuadas = {
             energia: { puntos: 0, peso: 0, puntuacionNormalizada: 0 },
             estres: { puntos: 0, peso: 0, puntuacionNormalizada: 0 },
@@ -397,16 +500,6 @@ export default function SueroSelector() {
             oxidacion: { puntos: 0, peso: 0, puntuacionNormalizada: 0 },
             prevencion: { puntos: 0, peso: 0, puntuacionNormalizada: 0 }
         };
-
-        if (respuestas.objetivo) {
-            const objetivoSeleccionado = SECCIONES[0].preguntas[0].opciones.find(
-                opt => (opt as OpcionPregunta).valor === respuestas.objetivo
-            ) as OpcionPregunta | undefined;
-            if (objetivoSeleccionado?.dimension && dims[objetivoSeleccionado.dimension]) {
-                dims[objetivoSeleccionado.dimension].puntos += 10;
-                dims[objetivoSeleccionado.dimension].peso += 10;
-            }
-        }
         
         SECCIONES.forEach(seccion => {
             seccion.preguntas.forEach(pregunta => {
@@ -428,6 +521,31 @@ export default function SueroSelector() {
             const dim = dims[key];
             dim.puntuacionNormalizada = dim.peso > 0 ? (dim.puntos / dim.peso) * 100 : 0;
         });
+
+        return dims;
+    }, [respuestas]);
+
+    const calcularResultados = useCallback(() => {
+        const dims = calcularDimensiones();
+        
+        // Determinar automáticamente la necesidad principal después de calcular todas las puntuaciones
+        const necesidadPrincipal = determinarNecesidadPrincipal(dims);
+        
+        // Agregar peso extra a la dimensión principal para mejorar la recomendación
+        const mapeoDimension: Record<string, string> = {
+            'metabolismo': 'metabolismo',
+            'inmunidad': 'inmunidad', 
+            'estres': 'estres',
+            'energia': 'energia',
+            'antienvejecimiento': 'oxidacion'
+        };
+        
+        const dimensionPrincipal = mapeoDimension[necesidadPrincipal];
+        if (dimensionPrincipal && dims[dimensionPrincipal]) {
+            dims[dimensionPrincipal].puntos += 20; // Peso extra significativo
+            dims[dimensionPrincipal].peso += 20;
+            dims[dimensionPrincipal].puntuacionNormalizada = (dims[dimensionPrincipal].puntos / dims[dimensionPrincipal].peso) * 100;
+        }
 
         const compatibilidad: ResultadoSuero[] = Object.values(SUEROS).map(suero => {
             let puntuacionTotal = 0;
@@ -531,7 +649,7 @@ export default function SueroSelector() {
                     </div>
                 );
             case 'resultados':
-                return resultados && <PantallaResultados resultados={resultados} onRestart={reiniciar} respuestas={respuestas}/>;
+                return resultados && <PantallaResultados resultados={resultados} onRestart={reiniciar} respuestas={respuestas} dimensiones={calcularDimensiones()}/>;
             default:
                 return null;
         }

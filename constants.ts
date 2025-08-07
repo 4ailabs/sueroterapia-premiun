@@ -80,27 +80,6 @@ export const SUEROS: Record<string, Suero> = {
 
 export const SECCIONES: SeccionCuestionario[] = [
     {
-      id: 'objetivo_principal',
-      titulo: 'Objetivo Principal',
-      descripcion: 'Ayúdanos a entender tu necesidad principal.',
-      icon: React.createElement(Target, { className: "w-8 h-8 text-rose-500" }),
-      preguntas: [
-        {
-          id: 'objetivo',
-          texto: '¿Cuál es tu objetivo principal al buscar un suero IV?',
-          tipo: 'radio',
-          opciones: [
-            { valor: 'energia', texto: 'Aumentar energía y combatir fatiga', dimension: 'energia' },
-            { valor: 'estres', texto: 'Reducir estrés y mejorar sueño', dimension: 'estres' },
-            { valor: 'inmunidad', texto: 'Fortalecer sistema inmune', dimension: 'inmunidad' },
-            { valor: 'metabolismo', texto: 'Mejorar control de azúcar y metabolismo', dimension: 'metabolismo' },
-            { valor: 'antienvejecimiento', texto: 'Anti-envejecimiento y bienestar general', dimension: 'oxidacion' }
-          ],
-          peso: 10
-        },
-      ]
-    },
-    {
       id: 'sintomas_energia',
       titulo: 'Energía y Vitalidad',
       descripcion: 'Evaluamos tu nivel de energía actual.',
